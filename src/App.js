@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Ship from './components/Ship';
+import Star from './components/Star';
+import { randomNumBetween } from './common/helpers';
 
 const KEY = {
   LEFT:  37,
@@ -29,8 +31,10 @@ class App extends Component {
         down  : 0,
         space : 0,
       },
+      starCount: 20,
     }
     this.ship = [];
+    this.space = [];
   }
 
   handleResize() {
@@ -81,6 +85,13 @@ class App extends Component {
     context.fillRect(0, 0, this.state.screen.width, this.state.screen.height);
     context.globalAlpha = 1;
 
+    if(!this.space.length){
+      let count = this.state.starCount + 1;
+      this.setState({ starCount: count });
+      this.generateSpace(count)
+    }
+
+    this.updateObjects(this.space, 'space')
     this.updateObjects(this.ship, 'ship');
 
     context.restore();
@@ -98,6 +109,23 @@ class App extends Component {
       onDie: () => {}
     });
     this.createObject(ship, 'ship');
+    this.space = [];
+    this.generateSpace(this.state.starCount)
+  }
+
+  generateSpace(howMany){
+    let space = [];
+    for (let i = 0; i < howMany; i++) {
+      let star = new Star({
+        size: 80,
+        position: {
+          x: randomNumBetween(0, this.state.screen.width),
+          y: randomNumBetween(0, this.state.screen.height)
+        },
+        create: this.createObject.bind(this)
+      });
+      this.createObject(star, 'space');
+    }
   }
 
   createObject(item, group){

@@ -12,10 +12,10 @@ export default class Ship {
   }
 
   drift(dir){
-    if (dir == 'LEFT') {
+    if (dir === 'LEFT') {
       this.velocity.x -= Math.cos(-this.rotation*Math.PI/180) * this.speed;
     }
-    if (dir == 'RIGHT') {
+    if (dir === 'RIGHT') {
       this.velocity.x += Math.cos(-this.rotation*Math.PI/180) * this.speed;
     }
   }
