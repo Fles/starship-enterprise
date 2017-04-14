@@ -13,17 +13,18 @@ const KEY = {
   SPACE: 32
 };
 
-
 class App extends Component {
   constructor() {
     super();
+
     this.state = {
+      context: null,
+      starCount: 300,
       screen: {
         width: window.innerWidth,
         height: window.innerHeight,
         ratio: window.devicePixelRatio || 1,
       },
-      context: null,
       keys : {
         left  : 0,
         right : 0,
@@ -31,7 +32,6 @@ class App extends Component {
         down  : 0,
         space : 0,
       },
-      starCount: 20,
     }
     this.ship = [];
     this.space = [];
@@ -76,10 +76,9 @@ class App extends Component {
 
   update() {
     const context = this.state.context;
-
     context.save();
     context.scale(this.state.screen.ratio, this.state.screen.ratio);
-
+    
     context.fillStyle = '#000';
     context.globalAlpha = 0.4;
     context.fillRect(0, 0, this.state.screen.width, this.state.screen.height);
@@ -105,8 +104,7 @@ class App extends Component {
         x: this.state.screen.width / 2,
         y: this.state.screen.height / 2
       },
-      create: this.createObject.bind(this),
-      onDie: () => {}
+      create: this.createObject.bind(this)
     });
     this.createObject(ship, 'ship');
     this.space = [];
@@ -114,10 +112,9 @@ class App extends Component {
   }
 
   generateSpace(howMany){
-    let space = [];
     for (let i = 0; i < howMany; i++) {
       let star = new Star({
-        size: 80,
+        size: randomNumBetween(0.5, 1.5),
         position: {
           x: randomNumBetween(0, this.state.screen.width),
           y: randomNumBetween(0, this.state.screen.height)
