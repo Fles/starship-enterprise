@@ -1,22 +1,27 @@
 export default class Ship {
   constructor(args) {
-    this.position = args.position
+    this.position = args.position;
     this.velocity = {
       x: 0,
       y: 0
     }
     this.rotation = 0;
-    this.rotationSpeed = 6;
     this.speed = 0.15;
-    this.inertia = 0.99;
-    this.radius = 20;
-    this.lastShot = 0;
     this.create = args.create;
-    this.onDie = args.onDie;
+  }
+
+  accelerate(val){
+    this.velocity.x -= Math.sin(-this.rotation*Math.PI/180) * this.speed;
+    this.velocity.y -= Math.cos(-this.rotation*Math.PI/180) * this.speed;
   }
 
   render(state) {
-    // Draw
+    if(state.keys.up){
+      this.accelerate(1);
+    }
+    this.position.x += this.velocity.x;
+    this.position.y += this.velocity.y;
+
     const context = state.context;
     context.save();
     context.translate(this.position.x, this.position.y);
