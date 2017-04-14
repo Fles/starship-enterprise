@@ -11,15 +11,31 @@ export default class Ship {
     this.create = args.create;
   }
 
+  drift(dir){
+    if (dir == 'LEFT') {
+      this.velocity.x -= Math.cos(-this.rotation*Math.PI/180) * this.speed;
+    }
+    if (dir == 'RIGHT') {
+      this.velocity.x += Math.cos(-this.rotation*Math.PI/180) * this.speed;
+    }
+  }
+
   accelerate(val){
     this.velocity.x -= Math.sin(-this.rotation*Math.PI/180) * this.speed;
     this.velocity.y -= Math.cos(-this.rotation*Math.PI/180) * this.speed;
   }
 
   render(state) {
-    if(state.keys.up){
+    if(state.keys.space){
       this.accelerate(1);
     }
+    if(state.keys.left){
+      this.drift('LEFT');
+    }
+    if(state.keys.right){
+      this.drift('RIGHT');
+    }
+
     this.position.x += this.velocity.x;
     this.position.y += this.velocity.y;
     this.velocity.x *= this.inertia;
