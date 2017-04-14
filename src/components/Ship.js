@@ -7,6 +7,7 @@ export default class Ship {
     }
     this.rotation = 0;
     this.speed = 0.15;
+    this.inertia = 0.99;
     this.create = args.create;
   }
 
@@ -21,6 +22,13 @@ export default class Ship {
     }
     this.position.x += this.velocity.x;
     this.position.y += this.velocity.y;
+    this.velocity.x *= this.inertia;
+    this.velocity.y *= this.inertia;
+
+    if(this.position.x > state.screen.width) this.position.x = 0;
+    else if(this.position.x < 0) this.position.x = state.screen.width;
+    if(this.position.y > state.screen.height) this.position.y = 0;
+    else if(this.position.y < 0) this.position.y = state.screen.height;
 
     const context = state.context;
     context.save();

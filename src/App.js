@@ -76,6 +76,11 @@ class App extends Component {
     context.save();
     context.scale(this.state.screen.ratio, this.state.screen.ratio);
 
+    context.fillStyle = '#000';
+    context.globalAlpha = 0.4;
+    context.fillRect(0, 0, this.state.screen.width, this.state.screen.height);
+    context.globalAlpha = 1;
+
     this.updateObjects(this.ship, 'ship');
 
     context.restore();
