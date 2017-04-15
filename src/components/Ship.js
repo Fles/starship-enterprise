@@ -4,7 +4,8 @@ export default class Ship {
     this.velocity = {
       x: 0,
       y: 0
-    }
+    };
+    this.height = args.height;
     this.rotation = 0;
     this.speed = 0.15;
     this.inertia = 0.99;
@@ -21,30 +22,26 @@ export default class Ship {
   }
 
   accelerate(val){
-    this.velocity.x -= Math.sin(-this.rotation*Math.PI/180) * this.speed;
     this.velocity.y -= Math.cos(-this.rotation*Math.PI/180) * this.speed;
+  }
+  decelerate(val){
+    this.velocity.y += Math.cos(-this.rotation*Math.PI/180) * this.speed;
   }
 
   render(state) {
-    if(state.keys.space){
-      this.accelerate(1);
-    }
-    if(state.keys.left){
-      this.drift('LEFT');
-    }
-    if(state.keys.right){
-      this.drift('RIGHT');
-    }
+    if(state.keys.up) this.accelerate(1);
+    if(state.keys.space) this.decelerate(1);
+    if(state.keys.left) this.drift('LEFT');
+    if(state.keys.right) this.drift('RIGHT');
 
     this.position.x += this.velocity.x;
     this.position.y += this.velocity.y;
     this.velocity.x *= this.inertia;
     this.velocity.y *= this.inertia;
-
     if(this.position.x > state.screen.width) this.position.x = 0;
     else if(this.position.x < 0) this.position.x = state.screen.width;
     if(this.position.y > state.screen.height) this.position.y = 0;
-    else if(this.position.y < 0) this.position.y = state.screen.height;
+    else if(this.position.y + this.height  < 0) this.position.y = state.screen.height;
 
     const context = state.context;
     context.save();
