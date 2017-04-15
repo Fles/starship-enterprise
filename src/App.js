@@ -114,7 +114,7 @@ class App extends Component {
   generateSpace(howMany){
     for (let i = 0; i < howMany; i++) {
       let star = new Star({
-        size: randomNumBetween(0.5, 1.5),
+        size: randomNumBetween(0.2, 2),
         position: {
           x: randomNumBetween(0, this.state.screen.width),
           y: randomNumBetween(0, this.state.screen.height)

@@ -9,12 +9,22 @@ export default class Star {
     }
     this.rotation = 0;
     this.radius = 5;
+    this.speed = 0.15;
+    this.inertia = 0.99;
     this.size = args.size;
     this.create = args.create;
   }
+  accelerate(val){
+    this.velocity.y += randomNumBetween(0, 0.1) * this.speed;
+  }
+
   render(state){
-    this.position.x += this.velocity.x;
+    if(state.keys.space){
+      this.accelerate(1);
+    }
+
     this.position.y += this.velocity.y;
+    this.velocity.y *= this.inertia;
 
     if(this.position.x > state.screen.width + this.radius) this.position.x = -this.radius;
     else if(this.position.x < -this.radius) this.position.x = state.screen.width + this.radius;
