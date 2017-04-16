@@ -7,6 +7,7 @@ const KEY = {
   LEFT:  37,
   RIGHT: 39,
   UP: 38,
+  DOWN: 40,
   SPACE: 32,
   W1: 49,
   W2: 50,
@@ -23,7 +24,7 @@ class App extends Component {
 
     this.state = {
       context: null,
-      starCount: 300,
+      starCount: 150,
       screen: {
         width: window.innerWidth,
         height: window.innerHeight,
@@ -63,6 +64,7 @@ class App extends Component {
     if(e.keyCode === KEY.LEFT) keys.left = value;
     if(e.keyCode === KEY.RIGHT) keys.right = value;
     if(e.keyCode === KEY.UP) keys.up = value;
+    if(e.keyCode === KEY.DOWN) keys.down = value;
     if(e.keyCode === KEY.SPACE) keys.space = value;
     if(e.keyCode === KEY.W1) keys.w1 = value;
     if(e.keyCode === KEY.W2) keys.w2 = value;
@@ -122,7 +124,7 @@ class App extends Component {
         x: this.state.screen.width / 2,
         y: this.state.screen.height / 2
       },
-      height: 75,
+      topOffset: 65,
       create: this.createObject.bind(this)
     });
     this.createObject(ship, 'ship');
