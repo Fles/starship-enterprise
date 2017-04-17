@@ -50,7 +50,7 @@ export default class Ship {
 
     if (state.keys.left) this.drift = -30;
     if (state.keys.right) this.drift = 30;
-    if (Math.abs(parseInt(this.velocity.x)) == 0) this.drift = 0;
+    if (Math.abs(parseInt(this.velocity.x)) === 0) this.drift = 0;
 
     context.translate(this.position.x, this.position.y);
     context.setTransform(1, Math.tan(Math.PI / this.drift), 0, 1, this.position.x, this.position.y);

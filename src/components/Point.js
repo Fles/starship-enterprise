@@ -5,11 +5,11 @@ export default class Asteroid {
     this.position = args.position
     this.velocity = {
       x: 0,
-      y: randomNumBetween(0, 1.5)
+      y: randomNumBetween(0, 11.5)
     }
     this.rotation = 30;
     this.radius = 5;
-    this.speed = 0.1;
+    this.speed = 0.05;
     this.inertia = 0.99;
     this.size = args.size;
     this.create = args.create;
@@ -48,7 +48,9 @@ export default class Asteroid {
     if(this.position.y > state.screen.height + this.radius) this.position.y = -this.radius;
     else if(this.position.y < -this.radius) this.position.y = state.screen.height + this.radius;
 
-    this.drawStar(this.position.x, this.position.y, 5, 2.5, 4.2, state.context);
+    if(this.position.y > state.screen.height) this.position.x = randomNumBetween(0, state.screen.width)
+
+    this.drawStar(this.position.x, this.position.y, 5, this.radius, this.radius / 2, state.context);
   }
 
   drawStar(cx, cy, spikes, outerRadius, innerRadius, context) {

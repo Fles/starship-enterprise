@@ -165,7 +165,6 @@ class App extends Component {
   }
 
   generatePoints(howMany){
-    let points = [];
     let ship = this.ship[0];
     for (let i = 0; i < howMany; i++) {
       let point = new Point({
