@@ -64,7 +64,7 @@ export default class Ship {
     context.globalAlpha = 1.0;
     context.lineCap = 'round';
     context.miterLimit = 4;
-    context.lineWidth = 0.500000;
+    context.lineWidth = 0.200000;
     context.fillStyle = 'rgb(0, 0, 0)';
     context.moveTo(0, 0);
     context.rotate(0.000000);
@@ -164,7 +164,7 @@ export default class Ship {
     context.beginPath();
     context.strokeStyle = 'rgb(0, 0, 0)';
     context.miterLimit = 4;
-    context.lineWidth = 1.350026;
+    context.lineWidth = 0.350026;
     context.fillStyle = 'rgb(229, 229, 229)';
     context.moveTo(332.955840, 521.506650);
     context.bezierCurveTo(332.621870, 521.674010, 331.758040, 521.810270, 331.036220, 521.809440);
