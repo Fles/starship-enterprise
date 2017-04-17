@@ -77,11 +77,17 @@ class App extends Component {
       keys : keys
     });
   }
+  handleStart() {
+    let keys = this.state.keys;
+    keys.up = !keys.up;
+    keys.w3 = !keys.w3;
+  }
 
   componentDidMount() {
     window.addEventListener('keyup', this.handleKeys.bind(this, false));
     window.addEventListener('keydown', this.handleKeys.bind(this, true));
     window.addEventListener('resize', this.handleResize.bind(this, false));
+    window.addEventListener("touchstart", this.handleStart.bind(this, false), false);
     const context = this.refs.canvas.getContext('2d');
     this.setState({ context: context });
     this.startGame();
