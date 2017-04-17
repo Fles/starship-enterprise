@@ -11,6 +11,7 @@ export default class Ship {
     this.speed = 0.15;
     this.inertia = 0.99;
     this.drift = 0;
+    this.shipColor = 'black';
   }
 
   setDrift(dir){
@@ -20,6 +21,13 @@ export default class Ship {
     if (dir === 'RIGHT') {
       this.velocity.x += Math.cos(-this.rotation*Math.PI/180) * this.speed;
     }
+  }
+
+  collect() {
+    this.shipColor = 'yellow';
+    setTimeout(() => {
+      this.shipColor = 'black';
+    }, 150)
   }
 
   accelerate(val){
@@ -50,7 +58,7 @@ export default class Ship {
 
     if (state.keys.left) this.drift = -30;
     if (state.keys.right) this.drift = 30;
-    if (Math.abs(parseInt(this.velocity.x)) === 0) this.drift = 0;
+    if (Math.abs(parseInt(this.velocity.x, 10)) === 0) this.drift = 0;
 
     context.translate(this.position.x, this.position.y);
     context.setTransform(1, Math.tan(Math.PI / this.drift), 0, 1, this.position.x, this.position.y);
@@ -65,7 +73,7 @@ export default class Ship {
     context.lineCap = 'round';
     context.miterLimit = 4;
     context.lineWidth = 0.200000;
-    context.fillStyle = 'rgb(0, 0, 0)';
+    context.fillStyle = this.shipColor;
     context.moveTo(0, 0);
     context.rotate(0.000000);
     context.scale(1, 1);

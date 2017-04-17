@@ -1,6 +1,6 @@
 import { randomNumBetween } from '../common/helpers';
 
-export default class Asteroid {
+export default class Point {
   constructor(args) {
     this.position = args.position
     this.velocity = {
@@ -9,12 +9,26 @@ export default class Asteroid {
     }
     this.rotation = 30;
     this.radius = 5;
-    this.speed = 0.05;
+    this.speed = 0.07;
     this.inertia = 0.99;
     this.size = args.size;
     this.create = args.create;
+    this.remove = args.remove;
+    this.addScore = args.addScore;
     this.warp = null;
+    this.score = 10;
   }
+
+  collect() {
+
+    if (!!this.warp) {
+      this.addScore(this.score * this.warp);
+    } else {
+      this.addScore(1);
+    }
+    this.remove();
+  }
+
   accelerate(val){
     this.velocity.y += randomNumBetween(0, 0.1) * this.speed;
   }
@@ -28,7 +42,10 @@ export default class Asteroid {
   }
 
   render(state){
-    if (!!this.warp) this.velocity.y += randomNumBetween(0, 0.2) * this.speed * this.warp;
+    this.drawStar(this.position.x, this.position.y, 5, this.radius, this.radius / 2, state.context);
+    if (!!this.warp) {
+      this.velocity.y += randomNumBetween(0, 0.2) * this.speed * this.warp;
+    }
 
     if(state.keys.up) this.accelerate(1);
     if(state.keys.space) this.decelerate(1);
@@ -48,9 +65,9 @@ export default class Asteroid {
     if(this.position.y > state.screen.height + this.radius) this.position.y = -this.radius;
     else if(this.position.y < -this.radius) this.position.y = state.screen.height + this.radius;
 
-    if(this.position.y > state.screen.height) this.position.x = randomNumBetween(0, state.screen.width)
-
-    this.drawStar(this.position.x, this.position.y, 5, this.radius, this.radius / 2, state.context);
+    if(this.position.y > state.screen.height + this.radius) {
+      this.position.x = randomNumBetween(0, state.screen.width)
+    }
   }
 
   drawStar(cx, cy, spikes, outerRadius, innerRadius, context) {

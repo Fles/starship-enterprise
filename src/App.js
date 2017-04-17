@@ -25,8 +25,9 @@ class App extends Component {
 
     this.state = {
       context: null,
+      score: 0,
       starCount: 150,
-      pointCount: 10,
+      pointCount: 3,
       screen: {
         width: window.innerWidth,
         height: window.innerHeight,
@@ -80,7 +81,8 @@ class App extends Component {
       keys : keys
     });
   }
-  handleStart() {
+
+  handleTouch() {
     let keys = this.state.keys;
     keys.up = !keys.up;
     keys.w3 = !keys.w3;
@@ -90,7 +92,7 @@ class App extends Component {
     window.addEventListener('keyup', this.handleKeys.bind(this, false));
     window.addEventListener('keydown', this.handleKeys.bind(this, true));
     window.addEventListener('resize', this.handleResize.bind(this, false));
-    window.addEventListener("touchstart", this.handleStart.bind(this, false), false);
+    window.addEventListener("touchstart", this.handleTouch.bind(this, false), false);
     const context = this.refs.canvas.getContext('2d');
     this.setState({ context: context });
     this.startGame();
@@ -120,10 +122,12 @@ class App extends Component {
     }
 
     if(!this.points.length){
-      let count = this.state.pointCount + 1;
+      let count = this.state.pointCount;
       this.setState({ pointCount: count });
       this.generatePoints(count);
     }
+
+    this.onCollect(this.ship, this.points);
 
     this.updateObjects(this.space, 'space');
     this.updateObjects(this.points, 'points');
@@ -132,6 +136,12 @@ class App extends Component {
     context.restore();
 
     requestAnimationFrame(() => {this.update()});
+  }
+
+  addScore(points){
+    this.setState({
+      score: this.state.score + points,
+    });
   }
 
   startGame(){
@@ -165,6 +175,7 @@ class App extends Component {
   }
 
   generatePoints(howMany){
+    var self = this;
     let ship = this.ship[0];
     for (let i = 0; i < howMany; i++) {
       let point = new Point({
@@ -174,7 +185,8 @@ class App extends Component {
           y: randomNumBetweenExcluding(0, this.state.screen.height, ship.position.y-60, ship.position.y+60)
         },
         create: this.createObject.bind(this),
-        //addScore: this.addScore.bind(this)
+        remove: function () {self.removeObject(this, 'points')},
+        addScore: this.addScore.bind(this)
       });
       this.createObject(point, 'points');
     }
@@ -182,6 +194,13 @@ class App extends Component {
 
   createObject(item, group){
     this[group].push(item);
+  }
+
+  removeObject(item, group){
+    var index = this[group].indexOf(item);
+    if (index > -1) {
+      this[group].splice(index, 1);
+    }
   }
 
   updateObjects(items, group){
@@ -196,10 +215,31 @@ class App extends Component {
     }
   }
 
+  onCollect(items1, items2) {
+    var a = items1.length - 1;
+    var b;
+    for(a; a > -1; --a){
+      b = items2.length - 1;
+      for(b; b > -1; --b){
+        var item1 = items1[a];
+        var item2 = items2[b];
+
+        let dx = Math.abs(item1.position.x - item2.position.x).toFixed(1);
+        let dy = Math.abs(item1.position.y - item2.position.y).toFixed(1);
+
+        if(dx < 20 && dy < 20){
+          item1.collect();
+          item2.collect();
+        }
+      }
+    }
+  }
+
   render() {
     let { width, height, ratio } = this.state.screen;
     return (
       <div>
+        <span className="score current-score" >Score: {this.state.score}</span>
         <canvas ref='canvas' width={width * ratio} height={height * ratio} />
       </div>
     );
