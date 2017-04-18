@@ -32,51 +32,19 @@ export default class BlackHole {
     else if(this.position.y < - this.radius) this.position.y = screen.height + this.radius;
 
     // draw
-    context.lineWidth = 2;
-    context.strokeStyle = '#111';
-    context.fillStyle = 'rgb(0, 0, 0)';
-    context.save();
-    context.scale(1, 1);
-    context.beginPath();
-    context.arc(this.position.x, this.position.y, this.radius, 0, 6.283185307179586, false);
-    context.stroke();
-    context.fill();
-    context.closePath();
-    context.restore();
-
     context.lineWidth = 1;
     context.strokeStyle = '#111';
+    context.fillStyle = 'rgb(3, 3, 3)';
     context.save();
     context.scale(1, 1);
     context.beginPath();
-    context.arc(this.position.x, this.position.y, this.radius / 1.2, 0, 6.283185307179586, false);
-    context.stroke();
-    context.closePath();
-    context.restore();
-
-    context.lineWidth = 2;
-    context.strokeStyle = '#111';
-    context.save();
-    context.scale(1, 1);
-    context.beginPath();
-    context.arc(this.position.x, this.position.y, this.radius / 1.4, 0, 6.283185307179586, false);
-    context.stroke();
-    context.closePath();
-    context.restore();
-
-    context.lineWidth = 1;
-    context.strokeStyle = '#111';
-    context.fillStyle = 'rgb(0, 0, 0)';
-    context.save();
-    context.scale(1, 1);
-    context.beginPath();
-    context.arc(this.position.x, this.position.y, this.radius / 2, 0, 6.283185307179586, false);
+    context.arc(this.position.x, this.position.y, this.radius * 1.5, 0, 6.283185307179586, false);
     context.stroke();
     context.fill();
     context.closePath();
     context.restore();
 
     // remove out of screen
-    if(this.position.y > screen.height - this.radius) this.remove();
+    if(this.position.y > screen.height + this.radius / 2) this.remove();
   }
 }

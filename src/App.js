@@ -140,8 +140,8 @@ class App extends Component {
     }
 
     // check if point is collected
-    this.onCollect(this.ship, this.points);
-    this.onCollect(this.ship, this.holes);
+    this.intersection(this.ship, this.points);
+    this.intersection(this.ship, this.holes);
 
     // render or remove items
     this.updateObjects(this.space, 'space');
@@ -175,7 +175,7 @@ class App extends Component {
         x: this.state.screen.width / 2,
         y: this.state.screen.height / 2
       },
-      topOffset: 65,
+      radius: 35,
       create: this.createObject.bind(this)
     });
     this.createObject(ship, 'ship');
@@ -228,12 +228,13 @@ class App extends Component {
   generateHoles(howMany){
     var self = this;
     let ship = this.ship[0];
+    let radius = H.randomNumBetween(70, 90);
     for (let i = 0; i < howMany; i++) {
       let point = new BlackHole({
-        radius: H.randomNumBetween(100, 125),
+        radius,
         position: {
           x: H.randomNumBetweenExcluding(0, this.state.screen.width, ship.position.x-60, ship.position.x+60),
-          y: 0,
+          y: -radius,
         },
         create: this.createObject.bind(this),
         remove: function () {self.removeObject(this, 'holes')},
@@ -266,19 +267,18 @@ class App extends Component {
     }
   }
 
-  onCollect(items1, items2) {
-    var a = items1.length - 1;
-    var b;
+  intersection(items1, items2) {
+    let a = items1.length - 1;
+    let b;
     for(a; a > -1; --a){
       b = items2.length - 1;
       for(b; b > -1; --b){
-        var item1 = items1[a];
-        var item2 = items2[b];
+        let item1 = items1[a];
+        let item2 = items2[b];
 
-        let dx = Math.abs(item1.position.x - item2.position.x).toFixed(1);
-        let dy = Math.abs(item1.position.y - item2.position.y).toFixed(1);
+        let intersects = Math.hypot(item1.position.x - item2.position.x, item1.position.y - item2.position.y) <= (item1.radius + item2.radius);
 
-        if(dx < 20 && dy < 20){
+        if(intersects){
           item1.collect(this.state.warp);
           item2.collect(this.state.warp);
         }

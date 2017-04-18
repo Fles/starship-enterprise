@@ -2,7 +2,7 @@ export default class Ship {
   constructor(args) {
     this.create = args.create;
     this.position = args.position;
-    this.topOffset = args.topOffset;
+    this.radius = args.radius;
     this.velocity = {
       x: 0,
       y: 0
@@ -47,7 +47,7 @@ export default class Ship {
     if(this.position.x > screen.width) this.position.x = 0;
     else if(this.position.x < 0) this.position.x = screen.width;
     if(this.position.y > screen.height) this.position.y = 0;
-    else if(this.position.y + this.topOffset  < 0) this.position.y = screen.height;
+    else if(this.position.y + this.radius * 2 < 0) this.position.y = screen.height;
 
     context.save();
     context.translate(this.position.x, this.position.y);
@@ -294,7 +294,5 @@ export default class Ship {
     context.stroke();
     context.restore();
     context.restore();
-
-
   }
 }
