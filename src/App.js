@@ -36,7 +36,6 @@ class App extends Component {
         down  : 0,
         space : 0,
       },
-      motion: null
     }
     this.points = [];
     this.ship = [];
@@ -59,11 +58,27 @@ class App extends Component {
     if(e.keyCode === KEY.RIGHT) keys.right = value;
     if(e.keyCode === KEY.UP) keys.up = value;
     if(e.keyCode === KEY.DOWN) keys.down = value;
-    if(e.keyCode === KEY.SPACE) keys.space = value;
+    if(e.keyCode === KEY.SPACE) {
+      keys.space = !keys.space;
+      let { warp } = this.state;
+      if (warp > 1 ) {
+        warp--;
+        this.setState({ warp });
+      }
+    }
     this.setState({ keys });
   }
 
-  handleTouch() {}
+  handleTouch() {
+    let keys = this.state.keys;
+    keys.space = !keys.space;
+    let { warp } = this.state;
+    if (warp > 1 ) {
+      warp--;
+      this.setState({ warp });
+    }
+    this.setState({ keys });
+  }
 
   handleMotion(ev) {
     let acc = ev.accelerationIncludingGravity;
@@ -72,7 +87,7 @@ class App extends Component {
     keys.left = Math.sign(+acc.x.toFixed(0)) === 1 && acc.x > threshold;
     keys.right = Math.sign(+acc.x.toFixed(0)) === -1 && acc.x < threshold;
     keys.up = Math.sign(+acc.y.toFixed(0)) === -1 && acc.y < threshold;
-    keys.down = Math.sign(+acc.y.toFixed(0)) === 1 && acc.y > threshold;;
+    keys.down = Math.sign(+acc.y.toFixed(0)) === 1 && acc.y > threshold;
     this.setState({ keys });
   }
 

@@ -26,13 +26,14 @@ export default class Ship {
 
   accelerate() { this.velocity.y -= this.speed }
   decelerate() { this.velocity.y += this.speed }
+  lockY() { this.velocity.y = 0 }
 
   render({ screen, context, keys }) {
 
     // controls
-    if(keys.up) this.accelerate(1);
-    if(keys.down) this.decelerate(1);
-    if(keys.space) this.decelerate(1);
+    if(keys.up) this.accelerate();
+    if(keys.down) this.decelerate();
+    if(keys.space) this.lockY();
     if(keys.left) this.setDrift('LEFT');
     if(keys.right) this.setDrift('RIGHT');
 
