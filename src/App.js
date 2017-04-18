@@ -19,8 +19,10 @@ class App extends Component {
     this.state = {
       context: null,
       score: 0,
+      warp: 1,
       starCount: 150,
       pointCount: 3,
+      collectedPoints: 0,
       screen: {
         width: window.innerWidth,
         height: window.innerHeight,
@@ -118,9 +120,11 @@ class App extends Component {
   }
 
   addScore(points){
-    this.setState({
-      score: this.state.score + points,
-    });
+    let score = this.state.score + points;
+    let collectedPoints = this.state.collectedPoints + 1;
+    let warp = collectedPoints % 10 === 0 ?
+      this.state.warp + 1 : this.state.warp;
+    this.setState({ score, collectedPoints, warp });
   }
 
   startGame(){
@@ -161,7 +165,7 @@ class App extends Component {
         size: randomNumBetween(10, 20),
         position: {
           x: randomNumBetweenExcluding(0, this.state.screen.width, ship.position.x-60, ship.position.x+60),
-          y: 0,//randomNumBetweenExcluding(0, this.state.screen.height, ship.position.y-60, ship.position.y+60)
+          y: 0,
         },
         create: this.createObject.bind(this),
         remove: function () {self.removeObject(this, 'points')},
@@ -187,7 +191,7 @@ class App extends Component {
     for (let item of items) {
       if (item.delete) {
         this[group].splice(index, 1);
-      }else{
+      } else {
         items[index].render(this.state);
       }
       index++;
@@ -206,9 +210,9 @@ class App extends Component {
         let dx = Math.abs(item1.position.x - item2.position.x).toFixed(1);
         let dy = Math.abs(item1.position.y - item2.position.y).toFixed(1);
 
-        if(dx < 20 && dy < 20){
-          item1.collect();
-          item2.collect();
+        if(dx < 25 && dy < 25){
+          item1.collect(this.state.warp);
+          item2.collect(this.state.warp);
         }
       }
     }
@@ -219,6 +223,7 @@ class App extends Component {
     return (
       <div>
         <span className="score current-score" >Score: {this.state.score}</span>
+        <span className="warp current-warp" >Warp: {this.state.warp}</span>
         <canvas ref='canvas' width={width * ratio} height={height * ratio} />
       </div>
     );

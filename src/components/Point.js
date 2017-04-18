@@ -5,11 +5,11 @@ export default class Point {
     this.position = args.position
     this.velocity = {
       x: 0,
-      y: randomNumBetween(0, 2)
+      y: randomNumBetween(0, 0.2),
     }
     this.rotation = 30;
     this.radius = 5;
-    this.speed = 0.07;
+    this.speed = 0.1;
     this.inertia = 0.99;
     this.size = args.size;
     this.create = args.create;
@@ -18,24 +18,14 @@ export default class Point {
     this.score = 10;
   }
 
-  collect() {
-    this.addScore(this.score);
+  collect(warp) {
+    this.addScore(this.score * warp);
     this.remove();
   }
 
-  accelerate(val){
-    this.velocity.y += randomNumBetween(0, 0.1) * this.speed;
-  }
-  decelerate(val) {
-    this.velocity.y -= Math.cos(-this.rotation*Math.PI/180) * this.speed;
-  }
-
   render(state){
-    this.drawStar(this.position.x, this.position.y, 5, this.radius, this.radius / 2, state.context);
-    this.velocity.y += randomNumBetween(0, 0.2) * this.speed;
-
-    if(state.keys.up) this.accelerate(1);
-    if(state.keys.space) this.decelerate(1);
+    this.drawStar(this.position.x, this.position.y, 5, this.radius, this.radius / 2, state);
+    this.velocity.y += randomNumBetween(0, 0.2) * this.speed  * state.warp;
 
     this.position.y += this.velocity.y;
     this.velocity.y *= this.inertia;
@@ -45,14 +35,10 @@ export default class Point {
     if(this.position.y > state.screen.height + this.radius) this.position.y = -this.radius;
     else if(this.position.y < -this.radius) this.position.y = state.screen.height + this.radius;
 
-    if(this.position.y > state.screen.height) {
-      //this.position.x = randomNumBetween(0, state.screen.width)
-
-      this.remove();
-    }
+    if(this.position.y > state.screen.height) this.remove();
   }
 
-  drawStar(cx, cy, spikes, outerRadius, innerRadius, context) {
+  drawStar(cx, cy, spikes, outerRadius, innerRadius, { context }) {
     let rot = Math.PI / 2 * 3;
     let x = cx;
     let y = cy;
@@ -79,6 +65,5 @@ export default class Point {
     context.stroke();
     context.fillStyle='red';
     context.fill();
-
   }
 }

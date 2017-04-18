@@ -5,7 +5,7 @@ export default class Star {
     this.position = args.position
     this.velocity = {
       x: 0,
-      y: randomNumBetween(0, 1.1)
+      y: randomNumBetween(0, 0.2)
     }
     this.rotation = 0;
     this.radius = 5;
@@ -14,18 +14,9 @@ export default class Star {
     this.size = args.size;
     this.create = args.create;
   }
-  accelerate(val){
-    this.velocity.y += randomNumBetween(0, 0.1) * this.speed;
-  }
-  decelerate(val) {
-    this.velocity.y -= Math.cos(-this.rotation*Math.PI/180) * this.speed;
-  }
 
   render(state){
-    this.velocity.y += randomNumBetween(0, 0.2) * this.speed;
-
-    if(state.keys.up) this.accelerate(1);
-    if(state.keys.space) this.decelerate(1);
+    this.velocity.y += randomNumBetween(0, 0.2) * this.speed  * state.warp;
 
     this.position.y += this.velocity.y;
     this.velocity.y *= this.inertia;
@@ -43,17 +34,17 @@ export default class Star {
     context.fillStyle = 'rgb(255, 255, 255)';
     context.lineWidth = 0;
     context.beginPath();
-    context.fillRect(0, 0, this.starSize().width, this.starSize().height);
+    context.fillRect(0, 0, this.starSize(state.warp).width, this.starSize(state.warp).height);
     context.closePath();
     context.fill();
     context.stroke();
     context.restore();
   }
 
-  starSize() {
+  starSize(warp) {
     return {
-      width: this.warp ? this.size / this.warp / 2 : this.size,
-      height: this.warp ? this.size * this.warp * 5 : this.size
+      width: this.size / warp / 2,
+      height: this.size * warp
     }
   }
 }
