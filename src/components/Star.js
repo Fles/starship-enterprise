@@ -5,7 +5,7 @@ export default class Star {
     this.position = args.position
     this.velocity = {
       x: 0,
-      y: randomNumBetween(0, 1.5)
+      y: randomNumBetween(0, 1.1)
     }
     this.rotation = 0;
     this.radius = 5;
@@ -13,32 +13,19 @@ export default class Star {
     this.inertia = 0.99;
     this.size = args.size;
     this.create = args.create;
-    this.warp = null;
   }
   accelerate(val){
     this.velocity.y += randomNumBetween(0, 0.1) * this.speed;
   }
   decelerate(val) {
     this.velocity.y -= Math.cos(-this.rotation*Math.PI/180) * this.speed;
-    this.warp = null;
-  }
-
-  setWarp(lvl) {
-    this.warp = lvl;
   }
 
   render(state){
-    if (!!this.warp) this.velocity.y += randomNumBetween(0, 0.2) * this.speed * this.warp;
+    this.velocity.y += randomNumBetween(0, 0.2) * this.speed;
 
     if(state.keys.up) this.accelerate(1);
     if(state.keys.space) this.decelerate(1);
-    if(state.keys.w1) this.setWarp(1);
-    if(state.keys.w2) this.setWarp(2);
-    if(state.keys.w3) this.setWarp(3);
-    if(state.keys.w4) this.setWarp(4);
-    if(state.keys.w5) this.setWarp(5);
-    if(state.keys.w6) this.setWarp(6);
-    if(state.keys.w7) this.setWarp(7);
 
     this.position.y += this.velocity.y;
     this.velocity.y *= this.inertia;

@@ -5,7 +5,7 @@ export default class Point {
     this.position = args.position
     this.velocity = {
       x: 0,
-      y: randomNumBetween(0, 11.5)
+      y: randomNumBetween(0, 2)
     }
     this.rotation = 30;
     this.radius = 5;
@@ -15,17 +15,11 @@ export default class Point {
     this.create = args.create;
     this.remove = args.remove;
     this.addScore = args.addScore;
-    this.warp = null;
     this.score = 10;
   }
 
   collect() {
-
-    if (!!this.warp) {
-      this.addScore(this.score * this.warp);
-    } else {
-      this.addScore(1);
-    }
+    this.addScore(this.score);
     this.remove();
   }
 
@@ -34,28 +28,14 @@ export default class Point {
   }
   decelerate(val) {
     this.velocity.y -= Math.cos(-this.rotation*Math.PI/180) * this.speed;
-    this.warp = null;
-  }
-
-  setWarp(lvl) {
-    this.warp = lvl;
   }
 
   render(state){
     this.drawStar(this.position.x, this.position.y, 5, this.radius, this.radius / 2, state.context);
-    if (!!this.warp) {
-      this.velocity.y += randomNumBetween(0, 0.2) * this.speed * this.warp;
-    }
+    this.velocity.y += randomNumBetween(0, 0.2) * this.speed;
 
     if(state.keys.up) this.accelerate(1);
     if(state.keys.space) this.decelerate(1);
-    if(state.keys.w1) this.setWarp(1);
-    if(state.keys.w2) this.setWarp(2);
-    if(state.keys.w3) this.setWarp(3);
-    if(state.keys.w4) this.setWarp(4);
-    if(state.keys.w5) this.setWarp(5);
-    if(state.keys.w6) this.setWarp(6);
-    if(state.keys.w7) this.setWarp(7);
 
     this.position.y += this.velocity.y;
     this.velocity.y *= this.inertia;
@@ -65,8 +45,10 @@ export default class Point {
     if(this.position.y > state.screen.height + this.radius) this.position.y = -this.radius;
     else if(this.position.y < -this.radius) this.position.y = state.screen.height + this.radius;
 
-    if(this.position.y > state.screen.height + this.radius) {
-      this.position.x = randomNumBetween(0, state.screen.width)
+    if(this.position.y > state.screen.height) {
+      //this.position.x = randomNumBetween(0, state.screen.width)
+
+      this.remove();
     }
   }
 

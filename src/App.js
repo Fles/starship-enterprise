@@ -10,13 +10,6 @@ const KEY = {
   UP: 38,
   DOWN: 40,
   SPACE: 32,
-  W1: 49,
-  W2: 50,
-  W3: 51,
-  W4: 52,
-  W5: 53,
-  W6: 54,
-  W7: 55,
 };
 
 class App extends Component {
@@ -39,13 +32,6 @@ class App extends Component {
         up    : 0,
         down  : 0,
         space : 0,
-        w1    : 0,
-        w2    : 0,
-        w3    : 0,
-        w4    : 0,
-        w5    : 0,
-        w6    : 0,
-        w7    : 0,
       },
     }
     this.points = [];
@@ -70,13 +56,6 @@ class App extends Component {
     if(e.keyCode === KEY.UP) keys.up = value;
     if(e.keyCode === KEY.DOWN) keys.down = value;
     if(e.keyCode === KEY.SPACE) keys.space = value;
-    if(e.keyCode === KEY.W1) keys.w1 = value;
-    if(e.keyCode === KEY.W2) keys.w2 = value;
-    if(e.keyCode === KEY.W3) keys.w3 = value;
-    if(e.keyCode === KEY.W4) keys.w4 = value;
-    if(e.keyCode === KEY.W5) keys.w5 = value;
-    if(e.keyCode === KEY.W6) keys.w6 = value;
-    if(e.keyCode === KEY.W7) keys.w7 = value;
     this.setState({
       keys : keys
     });
@@ -116,7 +95,7 @@ class App extends Component {
     context.globalAlpha = 1;
 
     if(!this.space.length){
-      let count = this.state.starCount + 1;
+      let count = this.state.starCount;
       this.setState({ starCount: count });
       this.generateSpace(count)
     }
@@ -182,7 +161,7 @@ class App extends Component {
         size: randomNumBetween(10, 20),
         position: {
           x: randomNumBetweenExcluding(0, this.state.screen.width, ship.position.x-60, ship.position.x+60),
-          y: randomNumBetweenExcluding(0, this.state.screen.height, ship.position.y-60, ship.position.y+60)
+          y: 0,//randomNumBetweenExcluding(0, this.state.screen.height, ship.position.y-60, ship.position.y+60)
         },
         create: this.createObject.bind(this),
         remove: function () {self.removeObject(this, 'points')},
