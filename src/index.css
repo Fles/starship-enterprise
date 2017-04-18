@@ -16,7 +16,9 @@ canvas {
   height: 100%;
 }
 
-.score, .warp {
+
+
+.console .score, .console .warp {
   display: block;
   position: absolute;
   top: 15px;
@@ -25,6 +27,6 @@ canvas {
   font-size: 15px;
   color: white;
 }
-.warp {
+.console .warp {
   top: 35px;
 }

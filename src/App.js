@@ -23,6 +23,7 @@ class App extends Component {
       starCount: 150,
       pointCount: 5,
       collectedPoints: 0,
+      pointValue: 10,
       screen: {
         width: window.innerWidth,
         height: window.innerHeight,
@@ -106,11 +107,10 @@ class App extends Component {
     context.fillRect(0, 0, screen.width, screen.height);
     context.globalAlpha = 1;
 
-    // next points
-    if(!this.points.length){
+    // generate next points
+    if(this.points.length < this.state.pointCount){
       let count = this.state.pointCount;
-      this.setState({ pointCount: count });
-      this.generatePoints(count);
+      this.generatePoints(count - this.points.length);
     }
 
     // check if point is collected
@@ -132,7 +132,7 @@ class App extends Component {
     let collectedPoints = this.state.collectedPoints + 1;
     let warp = collectedPoints % 10 === 0 ?
       this.state.warp + 1 : this.state.warp;
-    this.setState({ score, collectedPoints, warp });
+    this.setState({ score, collectedPoints, warp, pointValue: points });
   }
 
   startGame(){
@@ -235,8 +235,10 @@ class App extends Component {
     let { width, height, ratio } = this.state.screen;
     return (
       <div>
-        <span className="score current-score" >Score: {this.state.score}</span>
-        <span className="warp current-warp" >Warp: {this.state.warp}</span>
+        <div className="console">
+          <span className="score" >Score: { this.state.score }</span>
+          <span className="warp" >Warp: { this.state.warp }</span>
+        </div>
         <canvas ref='canvas' width={width * ratio} height={height * ratio} />
       </div>
     );
