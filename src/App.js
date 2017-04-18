@@ -35,6 +35,7 @@ class App extends Component {
         down  : 0,
         space : 0,
       },
+      motion: null
     }
     this.points = [];
     this.ship = [];
@@ -58,22 +59,30 @@ class App extends Component {
     if(e.keyCode === KEY.UP) keys.up = value;
     if(e.keyCode === KEY.DOWN) keys.down = value;
     if(e.keyCode === KEY.SPACE) keys.space = value;
-    this.setState({
-      keys : keys
-    });
+    this.setState({ keys });
   }
 
-  handleTouch() {
-    let keys = this.state.keys;
-    keys.up = !keys.up;
-    keys.w3 = !keys.w3;
+  handleTouch() {}
+
+  handleMotion(ev) {
+    let acc = ev.accelerationIncludingGravity;
+    if (!!acc) {
+      let keys = this.state.keys;
+      let threshold = 1;
+      keys.left = Math.sign(+acc.x.toFixed(0)) === 1 && acc.x > threshold;
+      keys.right = Math.sign(+acc.x.toFixed(0)) === -1 && acc.x < threshold;
+      keys.up = Math.sign(+acc.y.toFixed(0)) === -1 && acc.y < threshold;
+      keys.down = Math.sign(+acc.y.toFixed(0)) === 1 && acc.y > threshold;;
+      this.setState({ keys });
+    }
   }
 
   componentDidMount() {
     window.addEventListener('keyup', this.handleKeys.bind(this, false));
     window.addEventListener('keydown', this.handleKeys.bind(this, true));
     window.addEventListener('resize', this.handleResize.bind(this, false));
-    window.addEventListener("touchstart", this.handleTouch.bind(this, false), false);
+    window.addEventListener("touchstart", this.handleTouch.bind(this, false));
+    window.addEventListener('devicemotion', this.handleMotion.bind(this ), false);
     const context = this.refs.canvas.getContext('2d');
     this.setState({ context: context });
     this.startGame();

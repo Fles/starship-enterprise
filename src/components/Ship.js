@@ -61,7 +61,7 @@ export default class Ship {
     if (Math.abs(parseInt(this.velocity.x, 10)) === 0) this.drift = 0;
 
     context.translate(this.position.x, this.position.y);
-    context.setTransform(1, Math.tan(Math.PI / this.drift), 0, 1, this.position.x, this.position.y);
+    //context.setTransform(1, Math.tan(Math.PI / this.drift), 0, 1, this.position.x, this.position.y);
     context.rotate(this.rotation * Math.PI / 180);
 
     this.getShipPath(context, state);
@@ -110,7 +110,7 @@ export default class Ship {
     context.strokeStyle = 'rgb(0, 0, 0)';
     context.lineCap = 'butt';
     context.lineWidth = 0;
-    context.fillStyle = `rgb(0, ${state.keys.up ? '100, 250' : '0, 0'})`;
+    context.fillStyle = `rgb(${state.keys.up ? 200 : 0}, 0, 0)`;
     context.moveTo(308.044940, 481.804020);
     context.lineTo(308.881830, 490.312390);
     context.lineTo(301.070870, 496.031130);
