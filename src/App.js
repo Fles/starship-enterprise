@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Ship from './components/Ship';
 import Star from './components/Star';
 import Point from './components/Point';
-import { randomNumBetween, randomNumBetweenExcluding } from './common/helpers';
+import * as H  from './common/helpers';
 
 const KEY = {
   LEFT:  37,
@@ -66,15 +66,13 @@ class App extends Component {
 
   handleMotion(ev) {
     let acc = ev.accelerationIncludingGravity;
-    if (!!acc) {
-      let keys = this.state.keys;
-      let threshold = 1;
-      keys.left = Math.sign(+acc.x.toFixed(0)) === 1 && acc.x > threshold;
-      keys.right = Math.sign(+acc.x.toFixed(0)) === -1 && acc.x < threshold;
-      keys.up = Math.sign(+acc.y.toFixed(0)) === -1 && acc.y < threshold;
-      keys.down = Math.sign(+acc.y.toFixed(0)) === 1 && acc.y > threshold;;
-      this.setState({ keys });
-    }
+    let keys = this.state.keys;
+    let threshold = 1;
+    keys.left = Math.sign(+acc.x.toFixed(0)) === 1 && acc.x > threshold;
+    keys.right = Math.sign(+acc.x.toFixed(0)) === -1 && acc.x < threshold;
+    keys.up = Math.sign(+acc.y.toFixed(0)) === -1 && acc.y < threshold;
+    keys.down = Math.sign(+acc.y.toFixed(0)) === 1 && acc.y > threshold;;
+    this.setState({ keys });
   }
 
   componentDidMount() {
@@ -82,7 +80,9 @@ class App extends Component {
     window.addEventListener('keydown', this.handleKeys.bind(this, true));
     window.addEventListener('resize', this.handleResize.bind(this, false));
     window.addEventListener("touchstart", this.handleTouch.bind(this, false));
-    window.addEventListener('devicemotion', this.handleMotion.bind(this ), false);
+    if (window.DeviceMotionEvent && H.mobileAndTabletCheck()) {
+      window.addEventListener('devicemotion', this.handleMotion.bind(this), false);
+    }
     const context = this.refs.canvas.getContext('2d');
     this.setState({ context: context });
     this.startGame();
@@ -96,20 +96,15 @@ class App extends Component {
   }
 
   update() {
-    const context = this.state.context;
+    const { context, screen } = this.state;
     context.save();
-    context.scale(this.state.screen.ratio, this.state.screen.ratio);
-    
-    context.fillStyle = '#000';
-    context.globalAlpha = 0.4;
-    context.fillRect(0, 0, this.state.screen.width, this.state.screen.height);
-    context.globalAlpha = 1;
+    context.scale(screen.ratio, screen.ratio);
 
-    if(!this.space.length){
-      let count = this.state.starCount;
-      this.setState({ starCount: count });
-      this.generateSpace(count)
-    }
+    // motion
+    context.fillStyle = '#000';
+    context.globalAlpha = 0.5;
+    context.fillRect(0, 0, screen.width, screen.height);
+    context.globalAlpha = 1;
 
     if(!this.points.length){
       let count = this.state.pointCount;
@@ -155,10 +150,10 @@ class App extends Component {
   generateSpace(howMany){
     for (let i = 0; i < howMany; i++) {
       let star = new Star({
-        size: randomNumBetween(0.2, 1.8),
+        size: H.randomNumBetween(0.2, 1.8),
         position: {
-          x: randomNumBetween(0, this.state.screen.width),
-          y: randomNumBetween(0, this.state.screen.height)
+          x: H.randomNumBetween(0, this.state.screen.width),
+          y: H.randomNumBetween(0, this.state.screen.height)
         },
         create: this.createObject.bind(this)
       });
@@ -171,9 +166,9 @@ class App extends Component {
     let ship = this.ship[0];
     for (let i = 0; i < howMany; i++) {
       let point = new Point({
-        size: randomNumBetween(10, 20),
+        size: H.randomNumBetween(10, 20),
         position: {
-          x: randomNumBetweenExcluding(0, this.state.screen.width, ship.position.x-60, ship.position.x+60),
+          x: H.randomNumBetweenExcluding(0, this.state.screen.width, ship.position.x-60, ship.position.x+60),
           y: 0,
         },
         create: this.createObject.bind(this),
