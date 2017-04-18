@@ -64,10 +64,10 @@ export default class Ship {
     context.setTransform(1, Math.tan(Math.PI / this.drift), 0, 1, this.position.x, this.position.y);
     context.rotate(this.rotation * Math.PI / 180);
 
-    this.getShipPath(context);
+    this.getShipPath(context, state);
   }
 
-  getShipPath(context) {
+  getShipPath(context, state) {
     context.beginPath();
     context.globalAlpha = 1.0;
     context.lineCap = 'round';
@@ -109,8 +109,8 @@ export default class Ship {
     context.lineJoin = 'miter';
     context.strokeStyle = 'rgb(0, 0, 0)';
     context.lineCap = 'butt';
-    context.lineWidth = 1.753280;
-    context.fillStyle = 'rgb(0, 0, 0)';
+    context.lineWidth = 0;
+    context.fillStyle = `rgb(0, ${state.keys.up ? '100, 250' : '0, 0'})`;
     context.moveTo(308.044940, 481.804020);
     context.lineTo(308.881830, 490.312390);
     context.lineTo(301.070870, 496.031130);
@@ -145,8 +145,8 @@ export default class Ship {
     context.globalAlpha = 1.0;
     context.lineCap = 'round';
     context.miterLimit = 4;
-    context.lineWidth = 0.500000;
-    context.fillStyle = 'rgb(181, 181, 181)';
+    context.lineWidth = 2;
+    context.fillStyle = `rgb(${state.keys.space || state.keys.down ? 256 : 0}, 0, 0)`;
     context.moveTo(330.865690, 515.365251);
     context.bezierCurveTo(331.932392, 515.365251, 332.797124, 516.332052, 332.797124, 517.524660);
     context.bezierCurveTo(332.797124, 518.717268, 331.932392, 519.684069, 330.865690, 519.684069);
@@ -159,8 +159,8 @@ export default class Ship {
     context.globalAlpha = 1.0;
     context.lineCap = 'round';
     context.miterLimit = 4;
-    context.lineWidth = 0.500000;
-    context.fillStyle = 'rgb(181, 181, 181)';
+    context.lineWidth = 2;
+    context.fillStyle = `rgb(${state.keys.space || state.keys.down ? 256 : 0}, 0, 0)`;
     context.moveTo(297.740170, 515.686111);
     context.bezierCurveTo(298.806872, 515.686111, 299.671604, 516.652912, 299.671604, 517.845520);
     context.bezierCurveTo(299.671604, 519.038128, 298.806872, 520.004929, 297.740170, 520.004929);
@@ -172,7 +172,7 @@ export default class Ship {
     context.beginPath();
     context.strokeStyle = 'rgb(0, 0, 0)';
     context.miterLimit = 4;
-    context.lineWidth = 0.350026;
+    context.lineWidth = 0.001;
     context.fillStyle = 'rgb(229, 229, 229)';
     context.moveTo(332.955840, 521.506650);
     context.bezierCurveTo(332.621870, 521.674010, 331.758040, 521.810270, 331.036220, 521.809440);
