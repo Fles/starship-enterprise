@@ -7,20 +7,14 @@ export default class Ship {
       x: 0,
       y: 0
     };
-    this.rotation = 0;
     this.speed = 0.15;
     this.inertia = 0.99;
-    this.drift = 0;
     this.shipColor = 'black';
   }
 
-  setDrift(dir){
-    if (dir === 'LEFT') {
-      this.velocity.x -= Math.cos(-this.rotation*Math.PI/180) * this.speed;
-    }
-    if (dir === 'RIGHT') {
-      this.velocity.x += Math.cos(-this.rotation*Math.PI/180) * this.speed;
-    }
+  setDrift(dir) {
+    if (dir === 'LEFT') this.velocity.x -= this.speed;
+    if (dir === 'RIGHT') this.velocity.x += this.speed;
   }
 
   collect() {
@@ -30,44 +24,37 @@ export default class Ship {
     }, 150)
   }
 
-  accelerate(val){
-    this.velocity.y -= Math.cos(-this.rotation*Math.PI/180) * this.speed;
-  }
-  decelerate(val){
-    this.velocity.y += Math.cos(-this.rotation*Math.PI/180) * this.speed;
-  }
+  accelerate() { this.velocity.y -= this.speed }
+  decelerate() { this.velocity.y += this.speed }
 
-  render(state) {
-    if(state.keys.up) this.accelerate(1);
-    if(state.keys.down) this.decelerate(1);
-    if(state.keys.space) this.decelerate(1);
-    if(state.keys.left) this.setDrift('LEFT');
-    if(state.keys.right) this.setDrift('RIGHT');
+  render({ screen, context, keys }) {
 
+    // controls
+    if(keys.up) this.accelerate(1);
+    if(keys.down) this.decelerate(1);
+    if(keys.space) this.decelerate(1);
+    if(keys.left) this.setDrift('LEFT');
+    if(keys.right) this.setDrift('RIGHT');
+
+    // move
     this.position.x += this.velocity.x;
     this.position.y += this.velocity.y;
     this.velocity.x *= this.inertia;
     this.velocity.y *= this.inertia;
-    if(this.position.x > state.screen.width) this.position.x = 0;
-    else if(this.position.x < 0) this.position.x = state.screen.width;
-    if(this.position.y > state.screen.height) this.position.y = 0;
-    else if(this.position.y + this.topOffset  < 0) this.position.y = state.screen.height;
 
-    const context = state.context;
+    // check edges
+    if(this.position.x > screen.width) this.position.x = 0;
+    else if(this.position.x < 0) this.position.x = screen.width;
+    if(this.position.y > screen.height) this.position.y = 0;
+    else if(this.position.y + this.topOffset  < 0) this.position.y = screen.height;
+
     context.save();
-
-    if (state.keys.left) this.drift = -30;
-    if (state.keys.right) this.drift = 30;
-    if (Math.abs(parseInt(this.velocity.x, 10)) === 0) this.drift = 0;
-
     context.translate(this.position.x, this.position.y);
-    //context.setTransform(1, Math.tan(Math.PI / this.drift), 0, 1, this.position.x, this.position.y);
-    context.rotate(this.rotation * Math.PI / 180);
 
-    this.getShipPath(context, state);
+    this.getShipPath(context, keys);
   }
 
-  getShipPath(context, state) {
+  getShipPath(context, keys) {
     context.beginPath();
     context.globalAlpha = 1.0;
     context.lineCap = 'round';
@@ -104,13 +91,13 @@ export default class Ship {
     context.translate(-314.182132, -459.208008);
     context.fill();
 
-// #path5435
+    // #path5435
     context.beginPath();
     context.lineJoin = 'miter';
     context.strokeStyle = 'rgb(0, 0, 0)';
     context.lineCap = 'butt';
     context.lineWidth = 0;
-    context.fillStyle = `rgb(${state.keys.up ? 200 : 0}, 0, 0)`;
+    context.fillStyle = `rgb(${keys.up ? 200 : 0}, 0, 0)`;
     context.moveTo(308.044940, 481.804020);
     context.lineTo(308.881830, 490.312390);
     context.lineTo(301.070870, 496.031130);
@@ -140,13 +127,13 @@ export default class Ship {
     context.fill();
     context.stroke();
 
-// #path5437-3
+    // #path5437-3
     context.beginPath();
     context.globalAlpha = 1.0;
     context.lineCap = 'round';
     context.miterLimit = 4;
     context.lineWidth = 2;
-    context.fillStyle = `rgb(${state.keys.space || state.keys.down ? 256 : 0}, 0, 0)`;
+    context.fillStyle = `rgb(${keys.space || keys.down ? 256 : 0}, 0, 0)`;
     context.moveTo(330.865690, 515.365251);
     context.bezierCurveTo(331.932392, 515.365251, 332.797124, 516.332052, 332.797124, 517.524660);
     context.bezierCurveTo(332.797124, 518.717268, 331.932392, 519.684069, 330.865690, 519.684069);
@@ -154,13 +141,13 @@ export default class Ship {
     context.bezierCurveTo(328.934256, 516.332052, 329.798988, 515.365251, 330.865690, 515.365251);
     context.fill();
 
-// #path5437
+    // #path5437
     context.beginPath();
     context.globalAlpha = 1.0;
     context.lineCap = 'round';
     context.miterLimit = 4;
     context.lineWidth = 2;
-    context.fillStyle = `rgb(${state.keys.space || state.keys.down ? 256 : 0}, 0, 0)`;
+    context.fillStyle = `rgb(${keys.space || keys.down ? 256 : 0}, 0, 0)`;
     context.moveTo(297.740170, 515.686111);
     context.bezierCurveTo(298.806872, 515.686111, 299.671604, 516.652912, 299.671604, 517.845520);
     context.bezierCurveTo(299.671604, 519.038128, 298.806872, 520.004929, 297.740170, 520.004929);
@@ -168,7 +155,7 @@ export default class Ship {
     context.bezierCurveTo(295.808736, 516.652912, 296.673468, 515.686111, 297.740170, 515.686111);
     context.fill();
 
-// #path5203-0
+    // #path5203-0
     context.beginPath();
     context.strokeStyle = 'rgb(0, 0, 0)';
     context.miterLimit = 4;

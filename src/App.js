@@ -21,7 +21,7 @@ class App extends Component {
       score: 0,
       warp: 1,
       starCount: 150,
-      pointCount: 3,
+      pointCount: 5,
       collectedPoints: 0,
       screen: {
         width: window.innerWidth,
@@ -106,20 +106,24 @@ class App extends Component {
     context.fillRect(0, 0, screen.width, screen.height);
     context.globalAlpha = 1;
 
+    // next points
     if(!this.points.length){
       let count = this.state.pointCount;
       this.setState({ pointCount: count });
       this.generatePoints(count);
     }
 
+    // check if point is collected
     this.onCollect(this.ship, this.points);
 
+    // render or remove items
     this.updateObjects(this.space, 'space');
     this.updateObjects(this.points, 'points');
     this.updateObjects(this.ship, 'ship');
 
     context.restore();
 
+    // next frame
     requestAnimationFrame(() => {this.update()});
   }
 
@@ -132,6 +136,7 @@ class App extends Component {
   }
 
   startGame(){
+    // create ship
     let ship = new Ship({
       position: {
         x: this.state.screen.width / 2,
@@ -141,8 +146,12 @@ class App extends Component {
       create: this.createObject.bind(this)
     });
     this.createObject(ship, 'ship');
+
+    // create space
     this.space = [];
     this.generateSpace(this.state.starCount);
+
+    // create points
     this.points = [];
     this.generatePoints(this.state.pointCount)
   }
@@ -166,7 +175,7 @@ class App extends Component {
     let ship = this.ship[0];
     for (let i = 0; i < howMany; i++) {
       let point = new Point({
-        size: H.randomNumBetween(10, 20),
+        radius: H.randomNumBetween(3, 5),
         position: {
           x: H.randomNumBetweenExcluding(0, this.state.screen.width, ship.position.x-60, ship.position.x+60),
           y: 0,
