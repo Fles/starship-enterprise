@@ -37,6 +37,7 @@ class App extends Component {
         down  : 0,
         space : 0,
       },
+      lastSizeDeduction: Date.now()
     }
     this.points = [];
     this.holes = [];
@@ -156,8 +157,11 @@ class App extends Component {
   }
 
   reduceSize(){
-    let shipSize = this.state.shipSize * 0.7;
-    this.setState({ shipSize });
+    console.log("this.state.shipSize", this.state.shipSize);
+    if(Date.now() - this.state.lastSizeDeduction > 300){
+      let shipSize = this.state.shipSize * 0.7;
+      this.setState({ shipSize, lastSizeDeduction: Date.now() });
+    }
   }
 
   startGame(){
@@ -197,7 +201,7 @@ class App extends Component {
   }
 
   gameOver(){
-    if (this.state.shipSize > 0.007) return;
+    if (this.state.shipSize > 0.03) return;
     this.setState({ inGame: false });
   }
 
