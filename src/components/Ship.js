@@ -19,14 +19,14 @@ export default class Ship {
     if (dir === 'RIGHT') this.velocity.x += this.speed;
   }
 
-  intersected() {
-    this.shipColor = 'yellow';
-    setTimeout(() => {
-      this.shipColor = 'black';
-    }, 150);
-    let target = arguments[1];
+  intersected(warp, target) {
     if (target.type === "BlackHole") {
       this.onDestroy();
+    } else {
+      this.shipColor = 'yellow';
+      setTimeout(() => {
+        this.shipColor = 'black';
+      }, 150);
     }
   }
 
@@ -105,7 +105,7 @@ export default class Ship {
     context.strokeStyle = 'rgb(0, 0, 0)';
     context.lineCap = 'butt';
     context.lineWidth = 0;
-    context.fillStyle = `rgb(${keys.up ? 200 : 0}, 0, 0)`;
+    context.fillStyle = `rgb(${keys.up ? '110, 110, 110' : '0, 0, 0'})`;
     context.moveTo(308.044940, 481.804020);
     context.lineTo(308.881830, 490.312390);
     context.lineTo(301.070870, 496.031130);

@@ -208,7 +208,7 @@ class App extends Component {
   }
 
   gameOver() {
-    if (this.state.shipSize > 0.005) return;
+    if (this.state.shipSize > 0.007) return;
     this.setState({
       inGame: false,
     });

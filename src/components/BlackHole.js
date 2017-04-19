@@ -34,7 +34,7 @@ export default class BlackHole {
 
     // draw
     context.lineWidth = 3;
-    context.strokeStyle = '#111';
+    context.strokeStyle = '#151515';
     context.fillStyle = 'rgb(0, 0, 0)';
     context.save();
     context.scale(1, 1);
