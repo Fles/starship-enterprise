@@ -17,8 +17,8 @@ export default class Point {
     this.score = 10;
   }
 
-  intersected(warp) {
-    this.addScore(this.score * warp);
+  intersected(warp, target) {
+    if (target.type === 'Ship') this.addScore(this.score * warp);
     this.remove();
   }
 
@@ -67,7 +67,7 @@ export default class Point {
     context.lineWidth=3;
     context.strokeStyle='yellow';
     context.stroke();
-    context.fillStyle='red';
+    context.fillStyle='black';
     context.fill();
   }
 }

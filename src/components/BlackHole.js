@@ -15,8 +15,8 @@ export default class BlackHole {
     this.thieve = args.thieve;
   }
 
-  intersected(warp) {
-    this.thieve();
+  intersected(warp, target) {
+    if (target.type === 'Ship') this.thieve();
     //this.remove();
   }
 

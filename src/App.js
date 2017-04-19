@@ -133,6 +133,7 @@ class App extends Component {
     // check if point is collected
     this.intersection(this.ship, this.points);
     this.intersection(this.ship, this.holes);
+    this.intersection(this.holes, this.points);
 
     // render or remove items
     this.updateObjects(this.space, 'space');
@@ -157,7 +158,6 @@ class App extends Component {
   }
 
   reduceSize(){
-    console.log("this.state.shipSize", this.state.shipSize);
     if(Date.now() - this.state.lastSizeDeduction > 300){
       let shipSize = this.state.shipSize * 0.7;
       this.setState({ shipSize, lastSizeDeduction: Date.now() });
@@ -181,7 +181,7 @@ class App extends Component {
         x: this.state.screen.width / 2,
         y: this.state.screen.height / 2
       },
-      radius: 35,
+      radius: 25,
       create: this.createObject.bind(this),
       onDestroy: this.gameOver.bind(this),
     });
