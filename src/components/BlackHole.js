@@ -8,7 +8,7 @@ export default class BlackHole {
       y: randomNumBetween(0, 0.2),
     }
     this.radius = args.radius;
-    this.speed = 0.0001;
+    this.speed = 0.0002;
     this.create = args.create;
     this.remove = args.remove;
     this.thieve = args.thieve;
@@ -23,7 +23,7 @@ export default class BlackHole {
 
     // move
     this.position.y += this.velocity.y;
-    this.velocity.y += randomNumBetween(0, 0.2) * this.speed  * warp;
+    this.velocity.y += randomNumBetween(0, 0.1) * this.speed * warp;
 
     // check edges
     if(this.position.x > screen.width + this.radius) this.position.x = -this.radius;
@@ -32,9 +32,9 @@ export default class BlackHole {
     else if(this.position.y < - this.radius) this.position.y = screen.height + this.radius;
 
     // draw
-    context.lineWidth = 1;
+    context.lineWidth = 3;
     context.strokeStyle = '#111';
-    context.fillStyle = 'rgb(3, 3, 3)';
+    context.fillStyle = 'rgb(0, 0, 0)';
     context.save();
     context.scale(1, 1);
     context.beginPath();
