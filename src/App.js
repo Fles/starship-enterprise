@@ -174,7 +174,7 @@ class App extends Component {
   startGame(){
     this.setState({
       inGame: true,
-      currentScore: 0,
+      score: 0,
       collectedPoints: 0,
       warp: 1,
       pointValue: 10,
