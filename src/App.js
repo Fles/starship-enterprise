@@ -55,36 +55,28 @@ class App extends Component {
   }
   
   handleKeys(value, e){
-    let keys = this.state.keys;
+    let { keys, warp } = this.state;
     if(e.keyCode === KEY.LEFT) keys.left = value;
     if(e.keyCode === KEY.RIGHT) keys.right = value;
     if(e.keyCode === KEY.UP) keys.up = value;
     if(e.keyCode === KEY.DOWN) keys.down = value;
     if(e.keyCode === KEY.SPACE) {
       keys.space = !keys.space;
-      let { warp } = this.state;
-      if (warp > 1 ) {
-        warp--;
-        this.setState({ warp });
-      }
+      if (warp > 1 ) warp--;
     }
-    this.setState({ keys });
+    this.setState({ keys, warp });
   }
 
   handleTouch() {
-    let keys = this.state.keys;
+    let { keys, warp } = this.state;
     keys.space = !keys.space;
-    let { warp } = this.state;
-    if (warp > 1 ) {
-      warp--;
-      this.setState({ warp });
-    }
-    this.setState({ keys });
+    if (warp > 1 ) warp--;
+    this.setState({ keys, warp });
   }
 
   handleMotion(ev) {
+    let { keys } = this.state;
     let acc = ev.accelerationIncludingGravity;
-    let keys = this.state.keys;
     let threshold = 1;
     keys.left = Math.sign(+acc.x.toFixed(0)) === 1 && acc.x > threshold;
     keys.right = Math.sign(+acc.x.toFixed(0)) === -1 && acc.x < threshold;
@@ -227,8 +219,8 @@ class App extends Component {
 
   generatePoints(howMany){
     var self = this;
-    let ship = this.ship[0];
     let { screen } = this.state;
+    let ship = this.ship[0];
     let posX = ship.position.x;
     let D = ship.radius * 2;
 
@@ -249,8 +241,8 @@ class App extends Component {
 
   generateHoles(howMany){
     var self = this;
-    let ship = this.ship[0];
     let { screen } = this.state;
+    let ship = this.ship[0];
     let posX = ship.position.x;
     let D = ship.radius * 2;
     let radius = H.randomNumBetween(screen.width / 20, screen.width / 15);
@@ -324,11 +316,9 @@ class App extends Component {
         {
           !!this.state.inGame ? null :
             <div className="endgame">
-              <p>Game over, man!</p>
-              <button
-                onClick={ this.startGame.bind(this) }>
-                try again?
-              </button>
+              <p>Game over!</p>
+              <p>Your score is: {this.state.score}</p>
+              <button onClick={ this.startGame.bind(this) }>Try again?</button>
             </div>
         }
 
