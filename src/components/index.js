@@ -3,4 +3,4 @@ import Star from './Star';
 import Point from './Point';
 import BlackHole from './BlackHole';
 
-export { Ship, Star, Point, BlackHole};
+export { Ship, Star, Point, BlackHole };

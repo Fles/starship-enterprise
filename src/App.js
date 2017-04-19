@@ -62,7 +62,7 @@ class App extends Component {
     if(e.keyCode === KEY.DOWN) keys.down = value;
     if(e.keyCode === KEY.SPACE) {
       keys.space = !keys.space;
-      if (warp > 1 ) warp--;
+      warp > 1 && warp--;
     }
     this.setState({ keys, warp });
   }
@@ -70,7 +70,7 @@ class App extends Component {
   handleTouch() {
     let { keys, warp } = this.state;
     keys.space = !keys.space;
-    if (warp > 1 ) warp--;
+    warp > 1 && warp--;
     this.setState({ keys, warp });
   }
 
@@ -142,7 +142,7 @@ class App extends Component {
     context.restore();
 
     // next frame
-    requestAnimationFrame(() => {this.update()});
+    requestAnimationFrame(() => this.update());
   }
 
   addScore(points){
@@ -196,11 +196,9 @@ class App extends Component {
     this.generatePoints(this.state.pointCount);
   }
 
-  gameOver() {
+  gameOver(){
     if (this.state.shipSize > 0.007) return;
-    this.setState({
-      inGame: false,
-    });
+    this.setState({ inGame: false });
   }
 
   generateSpace(howMany){
@@ -223,8 +221,9 @@ class App extends Component {
     let ship = this.ship[0];
     let posX = ship.position.x;
     let D = ship.radius * 2;
+    let i = 0;
 
-    for (let i = 0; i < howMany; i++) {
+    for (i; i < howMany; i++) {
       let point = new Point({
         radius: H.randomNumBetween(3, 5),
         position: {
@@ -246,7 +245,9 @@ class App extends Component {
     let posX = ship.position.x;
     let D = ship.radius * 2;
     let radius = H.randomNumBetween(screen.width / 20, screen.width / 15);
-    for (let i = 0; i < howMany; i++) {
+    let i = 0;
+
+    for (i; i < howMany; i++) {
       let point = new BlackHole({
         radius,
         position: {
@@ -284,7 +285,7 @@ class App extends Component {
     }
   }
 
-  intersection(items1, items2) {
+  intersection(items1, items2){
     let a = items1.length - 1;
     let b;
     for(a; a > -1; --a){
@@ -309,7 +310,7 @@ class App extends Component {
     }
   }
 
-  render() {
+  render(){
     let { width, height, ratio } = this.state.screen;
     return (
       <div>
@@ -321,7 +322,6 @@ class App extends Component {
               <button onClick={ this.startGame.bind(this) }>Try again?</button>
             </div>
         }
-
         <div className="console">
           <span className="score" >Score: { this.state.score }</span>
           <span className="warp" >Warp: { this.state.warp }</span>
