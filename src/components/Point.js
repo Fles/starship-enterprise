@@ -16,7 +16,7 @@ export default class Point {
     this.score = 10;
   }
 
-  collect(warp) {
+  intersected(warp) {
     this.addScore(this.score * warp);
     this.remove();
   }

@@ -17,7 +17,7 @@ export default class Ship {
     if (dir === 'RIGHT') this.velocity.x += this.speed;
   }
 
-  collect() {
+  intersected() {
     this.shipColor = 'yellow';
     setTimeout(() => {
       this.shipColor = 'black';

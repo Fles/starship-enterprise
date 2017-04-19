@@ -276,11 +276,17 @@ class App extends Component {
         let item1 = items1[a];
         let item2 = items2[b];
 
-        let intersects = Math.hypot(item1.position.x - item2.position.x, item1.position.y - item2.position.y) <= (item1.radius + item2.radius);
+        // item must have radius
+        let r1 = item1.radius;
+        let r2 = item2.radius;
+        let X1minusX2 = item1.position.x - item2.position.x;
+        let Y1minusY2 = item1.position.y - item2.position.y;
 
-        if(intersects){
-          item1.collect(this.state.warp);
-          item2.collect(this.state.warp);
+        let intersected = Math.hypot(X1minusX2, Y1minusY2) <= (r1 + r2);
+
+        if(intersected){
+          item1.intersected(this.state.warp);
+          item2.intersected(this.state.warp);
         }
       }
     }
