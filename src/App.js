@@ -256,7 +256,7 @@ class App extends Component {
     let { screen } = this.state;
     let posX = ship.position.x;
     let D = ship.radius * 2;
-    let radius = H.randomNumBetween(70, 90);
+    let radius = H.randomNumBetween(screen.width / 20, screen.width / 15);
     for (let i = 0; i < howMany; i++) {
       let point = new BlackHole({
         radius,
