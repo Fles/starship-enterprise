@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-import Ship from './components/Ship';
-import Star from './components/Star';
-import Point from './components/Point';
-import BlackHole from './components/BlackHole';
-import * as H  from './common/helpers';
+import { Ship, Star, Point, BlackHole } from './components';
+import * as H from './common/helpers';
 
 const KEY = {
   LEFT:  37,
