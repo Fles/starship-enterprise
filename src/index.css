@@ -16,8 +16,6 @@ canvas {
   height: 100%;
 }
 
-
-
 .console .score, .console .warp {
   display: block;
   position: absolute;
@@ -29,4 +27,30 @@ canvas {
 }
 .console .warp {
   top: 35px;
+}
+
+.endgame{
+  color: white;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  z-index: 1;
+  text-align: center;
+}
+
+button{
+  border: 1px solid #fafafa;
+  background-color: transparent;
+  color: #fafafa;
+  font-size: 18px;
+  padding: 15px 25px;
+  margin: 5px;
+  cursor: pointer;
+}
+
+button:hover{
+  background-color: #fafafa;
+  color: #000000;
 }

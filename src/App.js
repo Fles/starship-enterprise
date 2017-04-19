@@ -21,6 +21,7 @@ class App extends Component {
       context: null,
       score: 0,
       warp: 1,
+      inGame: false,
       starCount: 150,
       pointCount: 5,
       holeCount: 1,
@@ -160,7 +161,9 @@ class App extends Component {
     let collectedPoints = this.state.collectedPoints + 1;
     let warp = collectedPoints % 10 === 0 ?
       this.state.warp + 1 : this.state.warp;
-    this.setState({ score, collectedPoints, warp, pointValue: points });
+    if(this.state.inGame){
+      this.setState({ score, collectedPoints, warp, pointValue: points });
+    }
   }
 
   reduceSize(){
@@ -169,14 +172,25 @@ class App extends Component {
   }
 
   startGame(){
+    this.setState({
+      inGame: true,
+      currentScore: 0,
+      collectedPoints: 0,
+      warp: 1,
+      pointValue: 10,
+      shipSize: 1
+    });
+
     // create ship
+    this.ship = [];
     let ship = new Ship({
       position: {
         x: this.state.screen.width / 2,
         y: this.state.screen.height / 2
       },
       radius: 35,
-      create: this.createObject.bind(this)
+      create: this.createObject.bind(this),
+      onDestroy: this.gameOver.bind(this),
     });
     this.createObject(ship, 'ship');
 
@@ -191,6 +205,13 @@ class App extends Component {
     // create points
     this.points = [];
     this.generatePoints(this.state.pointCount);
+  }
+
+  gameOver() {
+    if (this.state.shipSize > 0.005) return;
+    this.setState({
+      inGame: false,
+    });
   }
 
   generateSpace(howMany){
@@ -210,11 +231,15 @@ class App extends Component {
   generatePoints(howMany){
     var self = this;
     let ship = this.ship[0];
+    let { screen } = this.state;
+    let posX = ship.position.x;
+    let D = ship.radius * 2;
+
     for (let i = 0; i < howMany; i++) {
       let point = new Point({
         radius: H.randomNumBetween(3, 5),
         position: {
-          x: H.randomNumBetweenExcluding(0, this.state.screen.width, ship.position.x-60, ship.position.x+60),
+          x: H.randomNumBetweenExcluding(0, screen.width, posX - D, posX + D),
           y: 0,
         },
         create: this.createObject.bind(this),
@@ -228,12 +253,15 @@ class App extends Component {
   generateHoles(howMany){
     var self = this;
     let ship = this.ship[0];
+    let { screen } = this.state;
+    let posX = ship.position.x;
+    let D = ship.radius * 2;
     let radius = H.randomNumBetween(70, 90);
     for (let i = 0; i < howMany; i++) {
       let point = new BlackHole({
         radius,
         position: {
-          x: H.randomNumBetweenExcluding(0, this.state.screen.width, ship.position.x-60, ship.position.x+60),
+          x: H.randomNumBetweenExcluding(0, screen.width, posX - D, posX + D),
           y: -radius,
         },
         create: this.createObject.bind(this),
@@ -285,8 +313,8 @@ class App extends Component {
         let intersected = Math.hypot(X1minusX2, Y1minusY2) <= (r1 + r2);
 
         if(intersected){
-          item1.intersected(this.state.warp);
-          item2.intersected(this.state.warp);
+          item1.intersected(this.state.warp, item2);
+          item2.intersected(this.state.warp, item1);
         }
       }
     }
@@ -296,6 +324,17 @@ class App extends Component {
     let { width, height, ratio } = this.state.screen;
     return (
       <div>
+        {
+          !!this.state.inGame ? null :
+            <div className="endgame">
+              <p>Game over, man!</p>
+              <button
+                onClick={ this.startGame.bind(this) }>
+                try again?
+              </button>
+            </div>
+        }
+
         <div className="console">
           <span className="score" >Score: { this.state.score }</span>
           <span className="warp" >Warp: { this.state.warp }</span>

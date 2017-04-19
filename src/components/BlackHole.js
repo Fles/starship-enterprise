@@ -2,6 +2,7 @@ import { randomNumBetween } from '../common/helpers';
 
 export default class BlackHole {
   constructor(args) {
+    this.type = "BlackHole";
     this.position = args.position
     this.velocity = {
       x: 0,

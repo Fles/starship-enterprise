@@ -1,5 +1,6 @@
 export default class Ship {
   constructor(args) {
+    this.type = "Ship";
     this.create = args.create;
     this.position = args.position;
     this.radius = args.radius;
@@ -10,6 +11,7 @@ export default class Ship {
     this.speed = 0.15;
     this.inertia = 0.99;
     this.shipColor = 'black';
+    this.onDestroy = args.onDestroy;
   }
 
   setDrift(dir) {
@@ -21,7 +23,11 @@ export default class Ship {
     this.shipColor = 'yellow';
     setTimeout(() => {
       this.shipColor = 'black';
-    }, 150)
+    }, 150);
+    let target = arguments[1];
+    if (target.type === "BlackHole") {
+      this.onDestroy();
+    }
   }
 
   accelerate() { this.velocity.y -= this.speed }

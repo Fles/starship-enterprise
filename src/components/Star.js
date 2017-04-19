@@ -2,6 +2,7 @@ import { randomNumBetween } from '../common/helpers';
 
 export default class Star {
   constructor(args) {
+    this.type = "Star";
     this.position = args.position
     this.velocity = {
       x: 0,
