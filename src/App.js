@@ -159,7 +159,7 @@ class App extends Component {
 
   reduceSize(){
     if(Date.now() - this.state.lastSizeDeduction > 100){
-      if (this.state.damage > 0.95) return;
+      if (this.state.damage > 1) return;
       let damage = this.state.damage + 0.05;
       this.setState({ damage, lastSizeDeduction: Date.now() });
     }
@@ -328,9 +328,14 @@ class App extends Component {
             </div>
         }
         <div className="console">
-          <span className="score" >Score { this.state.score }</span>
-          <span className="warp" >Warp { this.state.warp }</span>
-          <span className="damage" >Damage { +this.state.damage.toFixed(1) * 100 }%</span>
+          <span className="score">Score { this.state.score }</span>
+          <span className="warp">Warp { this.state.warp }</span>
+          <span className="damage">
+            Damage { +this.state.damage.toFixed(1) * 100 }%
+          </span>
+          <span className="damageBar">
+            <span style={{width: `${this.state.damage * 100}%`}}></span>
+          </span>
         </div>
         <canvas ref='canvas' width={width * ratio} height={height * ratio} />
       </div>
