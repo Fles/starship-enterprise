@@ -10,7 +10,7 @@ export default class Ship {
     };
     this.speed = 0.15;
     this.inertia = 0.99;
-    this.shipColor = 'black';
+    this.color = 'black';
     this.onDestroy = args.onDestroy;
   }
 
@@ -23,10 +23,8 @@ export default class Ship {
     if (target.type === "BlackHole") {
       this.onDestroy();
     } else {
-      this.shipColor = 'yellow';
-      setTimeout(() => {
-        this.shipColor = 'black';
-      }, 150);
+      this.color = 'yellow';
+      setTimeout(() => this.color = 'black', 60);
     }
   }
 
@@ -67,7 +65,7 @@ export default class Ship {
     context.lineCap = 'round';
     context.miterLimit = 4;
     context.lineWidth = 0.200000;
-    context.fillStyle = this.shipColor;
+    context.fillStyle = this.color;
     context.moveTo(0, 0);
     context.rotate(0.000000);
     context.scale(size, size);

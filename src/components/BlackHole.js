@@ -10,6 +10,7 @@ export default class BlackHole {
     }
     this.radius = args.radius;
     this.speed = 0.0002;
+    this.color = 'black';
     this.create = args.create;
     this.remove = args.remove;
     this.thieve = args.thieve;
@@ -17,7 +18,8 @@ export default class BlackHole {
 
   intersected(warp, target) {
     if (target.type === 'Ship') this.thieve();
-    //this.remove();
+    this.color = 'rgb(15, 15, 15)';
+    setTimeout(() => this.color = 'black', 20);
   }
 
   render({ context, screen, warp }){
@@ -35,7 +37,7 @@ export default class BlackHole {
     // draw
     context.lineWidth = 3;
     context.strokeStyle = '#151515';
-    context.fillStyle = 'rgb(0, 0, 0)';
+    context.fillStyle = this.color;
     context.save();
     context.scale(1, 1);
     context.beginPath();
