@@ -16,17 +16,23 @@ canvas {
   height: 100%;
 }
 
-.console .score, .console .warp {
-  display: block;
+.console {
+  display: flex;
+  justify-content: space-between;
+  margin-right: 10px;
+  width: 225px;
   position: absolute;
   top: 15px;
   right: 15px;
   z-index: 1;
   font-size: 15px;
   color: white;
+  text-align: center;
+  font-weight: 600;
+  color: #999;
 }
-.console .warp {
-  top: 35px;
+.console .warp, .damage {
+  margin-left: 25px;
 }
 
 .endgame{
@@ -35,7 +41,7 @@ canvas {
   top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
-  padding: 20px;
+  padding: 15px;
   z-index: 1;
   text-align: center;
 }

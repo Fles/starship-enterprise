@@ -24,7 +24,8 @@ class App extends Component {
       holeCount: 1,
       collectedPoints: 0,
       pointValue: 10,
-      shipSize: 1,
+      damage: 0,
+      lastSizeDeduction: Date.now(),
       screen: {
         width: window.innerWidth,
         height: window.innerHeight,
@@ -36,8 +37,7 @@ class App extends Component {
         up    : 0,
         down  : 0,
         space : 0,
-      },
-      lastSizeDeduction: Date.now()
+      }
     }
     this.points = [];
     this.holes = [];
@@ -158,9 +158,10 @@ class App extends Component {
   }
 
   reduceSize(){
-    if(Date.now() - this.state.lastSizeDeduction > 300){
-      let shipSize = this.state.shipSize * 0.7;
-      this.setState({ shipSize, lastSizeDeduction: Date.now() });
+    if(Date.now() - this.state.lastSizeDeduction > 100){
+      if (this.state.damage > 0.95) return;
+      let damage = this.state.damage + 0.05;
+      this.setState({ damage, lastSizeDeduction: Date.now() });
     }
   }
 
@@ -171,7 +172,7 @@ class App extends Component {
       collectedPoints: 0,
       warp: 1,
       pointValue: 10,
-      shipSize: 1
+      damage: 0
     });
 
     // create ship
@@ -201,7 +202,7 @@ class App extends Component {
   }
 
   gameOver(){
-    if (this.state.shipSize > 0.03) return;
+    if (this.state.damage < 0.95) return;
     this.setState({ inGame: false });
   }
 
@@ -327,8 +328,9 @@ class App extends Component {
             </div>
         }
         <div className="console">
-          <span className="score" >Score: { this.state.score }</span>
-          <span className="warp" >Warp: { this.state.warp }</span>
+          <span className="score" >Score { this.state.score }</span>
+          <span className="warp" >Warp { this.state.warp }</span>
+          <span className="damage" >Damage { +this.state.damage.toFixed(1) * 100 }%</span>
         </div>
         <canvas ref='canvas' width={width * ratio} height={height * ratio} />
       </div>

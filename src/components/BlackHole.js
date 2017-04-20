@@ -23,7 +23,6 @@ export default class BlackHole {
   }
 
   render({ context, screen, warp }){
-
     // move
     this.position.y += this.velocity.y;
     this.velocity.y += randomNumBetween(0, 0.1) * this.speed * warp;

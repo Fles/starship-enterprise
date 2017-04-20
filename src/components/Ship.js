@@ -32,7 +32,7 @@ export default class Ship {
   decelerate() { this.velocity.y += this.speed }
   lockY() { this.velocity.y = 0 }
 
-  render({ screen, context, keys, shipSize }) {
+  render({ screen, context, keys, damage }) {
 
     // controls
     if(keys.up) this.accelerate();
@@ -56,10 +56,10 @@ export default class Ship {
     context.save();
     context.translate(this.position.x, this.position.y);
 
-    this.getShipPath(context, keys, +shipSize.toFixed(1));
+    this.getShipPath(context, keys, +damage.toFixed(1));
   }
 
-  getShipPath(context, keys, size) {
+  getShipPath(context, keys, damage) {
     context.beginPath();
     context.globalAlpha = 1.0;
     context.lineCap = 'round';
@@ -68,7 +68,7 @@ export default class Ship {
     context.fillStyle = this.color;
     context.moveTo(0, 0);
     context.rotate(0.000000);
-    context.scale(size, size);
+    context.scale(1 - damage, 1 - damage);
     context.scale(1, 1);
     context.arc(0.000000, 0.000000, 23.990818, -0.000000, 1.57079641, 0);
     context.scale(1.000000, 1.000000);
