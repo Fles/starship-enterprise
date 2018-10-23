@@ -1,5 +1,7 @@
 **Starship enterprise** [`NCC-1701-A`](https://en.wikipedia.org/wiki/USS_Enterprise_(NCC-1701-A))
 
+[`DEMO`](https://build-fxwrpdjieg.now.sh/)
+
 `Install: yarn install`
 
 `Start: yarn start`
