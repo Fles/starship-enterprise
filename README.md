@@ -1,15 +1,18 @@
-**Starship enterprise** Based on [`NCC-1701-A`](https://en.wikipedia.org/wiki/USS_Enterprise_(NCC-1701-A))
+**Starship enterprise** Based on [`NCC-1701-A`](https://en.wikipedia.org/wiki/USS_Enterprise_(NCC-1701-A)) design
 
 `Install: yarn install`
 
 `Start: yarn start`
 
 [`DEMO`](https://build-fxwrpdjieg.now.sh/)
+  to prevent ship damage (it also works in a mobile browser with tilt-shift UX).
+
 
 Goal:
 
-- collect points and avoid black holes
-- point have higher value on higher warp level
+- collect stars to get more warp speed 
+- avoid hard-to-see black holes (hey, they are caled black for reason)
+- stars have higher value on higher warp level
 
 Controls:
 
