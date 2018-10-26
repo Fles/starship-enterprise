@@ -21,7 +21,7 @@ Controls:
         - left arrow
         - right arrow     
     - brake
-        - space (lose all warp levels speed)   
+        - space (lose all warp levels speed, it also lock speed)   
 
 - mobile browser
     - move
