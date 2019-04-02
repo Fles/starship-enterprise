@@ -1,4 +1,6 @@
-**Starship enterprise** Based on [`NCC-1701-A`](https://en.wikipedia.org/wiki/USS_Enterprise_(NCC-1701-A)) design
+**Starship enterprise** 
+
+Small game based inspired by [`NCC-1701-A`](https://en.wikipedia.org/wiki/USS_Enterprise_(NCC-1701-A))
 
 `Install: yarn install`
 
