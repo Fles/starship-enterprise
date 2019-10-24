@@ -13,6 +13,8 @@ Goal:
 - collect stars to get more warp speed 
 - avoid hard-to-see black holes (hey, they are caled black for reason) to prevent ship damage
 - stars have higher value on higher warp level
+- more starrs = more speed
+- use brake = loose speed
 
 Controls:
 
