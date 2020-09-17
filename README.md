@@ -5,8 +5,6 @@ Small game based inspired by starship [`NCC-1701-A`](https://en.wikipedia.org/wi
 `Install: yarn install`
 
 `Start: yarn start`
-
-[`DEMO`](https://build-fxwrpdjieg.now.sh/)
   
 Goal:
 
