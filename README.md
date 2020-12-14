@@ -2,15 +2,13 @@
 
 Inspired by starship [`NCC-1701-A`](https://en.wikipedia.org/wiki/USS_Enterprise_(NCC-1701-A)) 
 
-## Instalation
+## Installation:
 
 `Install: yarn install`
 
 `Start: yarn start`
-  
-## Demo [link](https://starship-enterprise.vercel.app/)  
 
-Controls:
+## Controls:
 
 - desktop browser
     - move
@@ -34,3 +32,7 @@ Controls:
 - stars have higher value on higher warp level
 - more starrs = more speed
 - use brake = loose speed
+
+Demo [link](https://starship-enterprise.vercel.app/)
+
+![preview](./public/preview.png)
