@@ -1,14 +1,18 @@
-**Starship enterprise** 
+## **Starship enterprise 2017**
 
-Inspired by starship [`NCC-1701-A`](https://en.wikipedia.org/wiki/USS_Enterprise_(NCC-1701-A)) 
+_Inspired by starship [`NCC-1701-A`](https://en.wikipedia.org/wiki/USS_Enterprise_(NCC-1701-A))_ 
 
-## Installation:
+### Preview:
+[DEMO](https://starship-enterprise.vercel.app/)
+![preview](./public/preview.png)
+### Rules:
 
-`Install: yarn install`
-
-`Start: yarn start`
-
-## Controls:
+- collect stars to get more warp speed 
+- avoid hard-to-see black holes (hey, they are caled black for reason) to prevent ship damage
+- stars have higher value on higher warp level
+- more starrs = more speed
+- use brake = loose speed
+### Controls:
 
 - desktop browser
     - move
@@ -25,14 +29,10 @@ Inspired by starship [`NCC-1701-A`](https://en.wikipedia.org/wiki/USS_Enterprise
     - brake
         - touch screen (loose one warp level)
   
-## Rules:
 
-- collect stars to get more warp speed 
-- avoid hard-to-see black holes (hey, they are caled black for reason) to prevent ship damage
-- stars have higher value on higher warp level
-- more starrs = more speed
-- use brake = loose speed
 
-Demo [link](https://starship-enterprise.vercel.app/)
+### Installation:
 
-![preview](./public/preview.png)
+`Install: yarn install`
+
+`Start: yarn start`
