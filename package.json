@@ -5,6 +5,7 @@
   "dependencies": {
     "audit": "^0.0.6",
     "node-notifier": "^8.0.1",
+    "open": "6.0.0",
     "react": "^15.5.4",
     "react-dom": "^15.5.4"
   },
