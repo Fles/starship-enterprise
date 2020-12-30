@@ -1,10 +1,8 @@
 ## **Starship enterprise 2017**
 
-_Inspired by starship [`NCC-1701-A`](https://en.wikipedia.org/wiki/USS_Enterprise_(NCC-1701-A))_ 
-
-### Preview:
-[DEMO](https://starship-enterprise.vercel.app/)
 ![preview](./public/preview.png)
+[DEMO](https://starship-enterprise.vercel.app/)
+
 ### Rules:
 
 - collect stars to get more warp speed 
@@ -36,3 +34,4 @@ _Inspired by starship [`NCC-1701-A`](https://en.wikipedia.org/wiki/USS_Enterpris
 `Install: yarn install`
 
 `Start: yarn start`
+
